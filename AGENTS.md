@@ -90,6 +90,10 @@ See `docs/architectural_patterns.md` for:
 - Voice tool handlers MUST call `clearAllHighlights()` before navigating — see `src/app/page.tsx:28-31`.
 - Linters handle code style (`next lint`, `tsc --noEmit`) — don't restate style rules here.
 
+## Issue conventions
+
+Every issue in this project MUST include BDD scenarios (`Given` / `When` / `Then`) covering the acceptance criteria. The BDD block is the contract: when an agent picks the issue up, it derives TDD test cases directly from the scenarios. No BDD → the issue is not ready for an agent to pick up — apply `needs-info` and stop.
+
 ## Agent harness
 
 - **Issue tracker** — GitHub issues on `phassle/Demo20260504` via `gh` CLI. See `docs/agents/issue-tracker.md`.
