@@ -94,6 +94,17 @@ See `docs/architectural_patterns.md` for:
 
 Every issue in this project MUST include BDD scenarios (`Given` / `When` / `Then`) covering the acceptance criteria. The BDD block is the contract: when an agent picks the issue up, it derives TDD test cases directly from the scenarios. No BDD → the issue is not ready for an agent to pick up — apply `needs-info` and stop.
 
+## Branching — git-flow
+
+This repo uses **git-flow (AVH edition)**. Long-lived branches: `main` (production) and `develop` (integration). Configured via `git config gitflow.*` — re-init with the same values if cloning fresh.
+
+- New work starts from `develop` on a `feature/<short-name>` branch — prefer `git flow feature start <name>` over ad-hoc branches.
+- Bugfixes during a release: `bugfix/<name>` from `develop`.
+- Production hotfixes: `hotfix/<name>` from `main`.
+- Releases: `release/<version>` from `develop`, finished into `main` + `develop` with a `v<version>` tag.
+- Feature branches merge back via PR into `develop`, not `main`. Only `release/*` and `hotfix/*` PRs target `main`.
+- Don't commit directly to `main` or `develop` — open a PR from a feature/release/hotfix branch.
+
 ## Agent harness
 
 - **Issue tracker** — GitHub issues on `phassle/Demo20260504` via `gh` CLI. See `docs/agents/issue-tracker.md`.
