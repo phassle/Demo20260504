@@ -11,12 +11,14 @@ interface OrderState {
   orderNumber: number;
   items: OrderItem[];
   dineIn: boolean;
+  note: string;
 }
 
 type OrderAction =
   | { type: "ADD_ITEM"; product: Product }
   | { type: "REMOVE_ITEM"; index: number }
   | { type: "TOGGLE_DINE_IN" }
+  | { type: "SET_NOTE"; note: string }
   | { type: "PAY" };
 
 const INITIAL_ITEMS: OrderItem[] = [
@@ -44,11 +46,14 @@ function orderReducer(state: OrderState, action: OrderAction): OrderState {
       };
     case "TOGGLE_DINE_IN":
       return { ...state, dineIn: !state.dineIn };
+    case "SET_NOTE":
+      return { ...state, note: action.note };
     case "PAY":
       return {
         orderNumber: state.orderNumber + 1,
         items: [],
         dineIn: true,
+        note: "",
       };
     default:
       return state;
@@ -64,6 +69,7 @@ const POSView = forwardRef<POSViewHandle>(function POSView(_, ref) {
     orderNumber: 1,
     items: INITIAL_ITEMS,
     dineIn: true,
+    note: "",
   });
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [searchText, setSearchText] = useState("");
@@ -102,6 +108,8 @@ const POSView = forwardRef<POSViewHandle>(function POSView(_, ref) {
           orderNumber={order.orderNumber}
           items={order.items}
           dineIn={order.dineIn}
+          note={order.note}
+          onNoteChange={(next) => dispatch({ type: "SET_NOTE", note: next })}
           onToggleDineIn={() => dispatch({ type: "TOGGLE_DINE_IN" })}
           onRemoveItem={(i) => dispatch({ type: "REMOVE_ITEM", index: i })}
           onPay={() => dispatch({ type: "PAY" })}
