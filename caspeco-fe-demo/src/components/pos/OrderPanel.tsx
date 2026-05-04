@@ -12,6 +12,8 @@ interface OrderPanelProps {
   orderNumber: number;
   items: OrderItem[];
   dineIn: boolean;
+  note: string;
+  onNoteChange: (next: string) => void;
   onToggleDineIn: () => void;
   onRemoveItem: (index: number) => void;
   onPay: () => void;
@@ -21,6 +23,8 @@ export default function OrderPanel({
   orderNumber,
   items,
   dineIn,
+  note,
+  onNoteChange: _onNoteChange,
   onToggleDineIn,
   onRemoveItem,
   onPay,
@@ -85,6 +89,13 @@ export default function OrderPanel({
             Take away
           </button>
         </div>
+      </div>
+
+      {/* Note placeholder */}
+      <div className="px-4 py-2 border-b border-white/10">
+        <span className={`text-sm font-body ${note ? "text-white" : "text-text-secondary"}`}>
+          {note || "+ Lägg till notering"}
+        </span>
       </div>
 
       {/* Items list */}
